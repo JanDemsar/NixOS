@@ -19,6 +19,7 @@ in
     bottom
     lazygit
     jetbrains.clion
+    vscode
   ];
 
   home.username = "fedtop";
