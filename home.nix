@@ -18,6 +18,7 @@ in
     zip
     bottom
     lazygit
+    jetbrains.clion
   ];
 
   home.username = "fedtop";
