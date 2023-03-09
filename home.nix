@@ -17,6 +17,7 @@ in
     flac
     zip
     bottom
+    lazygit
   ];
 
   home.username = "fedtop";
