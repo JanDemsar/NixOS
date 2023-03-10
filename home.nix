@@ -18,8 +18,11 @@ in
     zip
     bottom
     lazygit
+    alacritty
     jetbrains.clion
     vscode
+    atom
+    teams
   ];
 
   home.username = "fedtop";
