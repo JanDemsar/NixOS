@@ -23,9 +23,6 @@ in
     vscode
     atom
     teams
-    meson
-    ninja
-    cmake
     pkg-config
     bolt
     stm32cubemx
