@@ -7,6 +7,9 @@ in
   imports = [
     ./zsh.nix
     ./fonts.nix
+    ./tmux.nix
+    ./nvim.nix
+#    ./jlink.nix
   ];
 
   home.packages = with pkgs; [
@@ -17,12 +20,17 @@ in
     flac
     zip
     bottom
-    lazygit
-    alacritty
     jetbrains.clion
     vscode
     atom
     teams
+    meson
+    ninja
+    cmake
+    pkg-config
+    bolt
+    stm32cubemx
+    openocd
   ];
 
   home.username = "fedtop";
