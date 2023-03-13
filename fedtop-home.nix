@@ -9,7 +9,6 @@ in
     ./fonts.nix
     ./tmux.nix
     ./nvim.nix
-#    ./jlink.nix
   ];
 
   home.packages = with pkgs; [
@@ -31,10 +30,14 @@ in
     bolt
     stm32cubemx
     openocd
+    jlink
   ];
 
   home.username = "fedtop";
   home.homeDirectory = "/home/fedtop";
   home.stateVersion = "22.11";
   programs.home-manager.enable = true;
+  home.sessionVariables = {
+    NIX_HOME_DERIVATION = "fedtop";
+  };
 }

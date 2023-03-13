@@ -16,47 +16,48 @@
   };
 
   outputs = inputs:
-  let
-    system = "x86_64-linux";
-    lib = inputs.nixpkgs-stable.lib;
-    home-manager = inputs.home-manager;
-    
-    mkFree = drv: drv.overrideAttrs (attrs: { meta = attrs.meta // { license = ""; }; });
+    let
+      system = "x86_64-linux";
+      lib = inputs.nixpkgs-stable.lib;
+      home-manager = inputs.home-manager;
 
-    stableOverlay = self: super: {
-      # Nix stores
-      unstable = pkgs-unstable;
-      pkgs-nvim = pkgs-nvim;
-      # Stable package overrides/additions
-      jlink = mkFree inputs.jlink-pack.defaultPackage.${system};
-    };
+      mkFree = drv: drv.overrideAttrs (attrs: { meta = attrs.meta // { license = ""; }; });
 
-    pkgs = import inputs.nixpkgs-stable {
-      inherit system;
-      config.allowUnfree = true;
-      overlays = [ stableOverlay ];
-    };
-
-    pkgs-unstable = import inputs.nixpkgs-unstable {
-      inherit system;
-      config.allowUnfree = true;
-    };
-
-    pkgs-nvim = import inputs.nixpkgs-nvim {
-      inherit system;
-      config.allowUnfree = true;
-    };
-  in rec {
-    homeConfigurations = {
-      fedtop = home-manager.lib.homeManagerConfiguration {
-	inherit pkgs;
-	modules = [ ./fedtop-home.nix ];
-	extraSpecialArgs = {
-	  lib = import "${home-manager}/modules/lib/stdlib-extended.nix" pkgs.unstable.lib;
-	};
+      stableOverlay = self: super: {
+        # Nix stores
+        unstable = pkgs-unstable;
+        pkgs-nvim = pkgs-nvim;
+        # Stable package overrides/additions
+        jlink = mkFree inputs.jlink-pack.defaultPackage.${system};
       };
+
+      pkgs = import inputs.nixpkgs-stable {
+        inherit system;
+        config.allowUnfree = true;
+        overlays = [ stableOverlay ];
+      };
+
+      pkgs-unstable = import inputs.nixpkgs-unstable {
+        inherit system;
+        config.allowUnfree = true;
+      };
+
+      pkgs-nvim = import inputs.nixpkgs-nvim {
+        inherit system;
+        config.allowUnfree = true;
+      };
+    in
+    rec {
+      homeConfigurations = {
+        fedtop = home-manager.lib.homeManagerConfiguration {
+          inherit pkgs;
+          modules = [ ./fedtop-home.nix ];
+          extraSpecialArgs = {
+            lib = import "${home-manager}/modules/lib/stdlib-extended.nix" pkgs.unstable.lib;
+          };
+        };
+      };
+      fedtop = homeConfigurations.fedtop.activationPackage;
+      defaultPackage.${system} = fedtop;
     };
-    fedtop = homeConfigurations.fedtop.activationPackage;
-    defaultPackage.${system} = fedtop;
-  };
 }
