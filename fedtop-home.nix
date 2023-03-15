@@ -28,6 +28,8 @@ in
     stm32cubemx
     openocd
     jlink
+    nmap
+    dpkg
   ];
 
   home.username = "fedtop";
