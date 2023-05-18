@@ -23,13 +23,19 @@ in
     vscode
     atom
     teams
-    pkg-config
     bolt
-    stm32cubemx
+    unstable.stm32cubemx
     openocd
-    jlink
     nmap
     dpkg
+    putty
+
+    # dev
+    glibc
+    pkg-config
+    jlink
+    stlink
+    gdb
   ];
 
   home.username = "fedtop";
