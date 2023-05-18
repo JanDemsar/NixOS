@@ -21,5 +21,4 @@ require 'nvim-treesitter.configs'.setup {
     -- Add parser install dir for "external (not nix, oops)" parsers, experimental, etc.
     parser_install_dir = vim.fn.stdpath("data") .. "/site",
     autopairs = { enable = true },
-    indent = { enable = true, disable = { "yaml", "text" } }
 }

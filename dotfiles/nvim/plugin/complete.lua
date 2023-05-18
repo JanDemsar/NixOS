@@ -1,6 +1,8 @@
 -- Help: https://github.com/hrsh7th/nvim-cmp/blob/main/doc/cmp.txt
 local cmp = require 'cmp'
+local select_opts = { behavior = cmp.SelectBehavior.Select }
 local luasnip = require 'luasnip'
+require('luasnip/loaders/from_vscode').lazy_load()
 local lspkind = require 'lspkind'
 
 -- some other good icons
@@ -66,6 +68,9 @@ cmp.setup({
         end,
     },
     mapping = ({
+        -- My tab implementation differs from up/down arrows
+        -- Here the item is previewed whereas up/down just selects
+        -- Same with luasnip
         ["<Tab>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
                 cmp.select_next_item()
@@ -86,12 +91,12 @@ cmp.setup({
                 fallback()
             end
         end, { "i", "s" }),
-        --['<S-Tab>'] = cmp.mapping.select_prev_item(),
-        --['<Tab>'] = cmp.mapping.select_next_item(),
         ['<C-n>'] = cmp.config.disable,
         ['<C-p>'] = cmp.config.disable,
-        ["<C-b>"] = cmp.mapping(cmp.mapping.scroll_docs(-1), { "i", "c" }),
-        ["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(1), { "i", "c" }),
+        ['<Up>'] = cmp.mapping.select_prev_item(select_opts),
+        ['<Down>'] = cmp.mapping.select_next_item(select_opts),
+        ["<C-u>"] = cmp.mapping(cmp.mapping.scroll_docs(-1), { "i", "c" }),
+        ["<C-d>"] = cmp.mapping(cmp.mapping.scroll_docs(1), { "i", "c" }),
         ['<C-k>'] = cmp.mapping.complete(),
         ['<C-e>'] = cmp.mapping.close(),
         ['<CR>'] = cmp.mapping.confirm({
@@ -101,16 +106,15 @@ cmp.setup({
     }),
     -- Installed sources
     sources = {
-        -- Language servers and snippets
-        { name = 'nvim_lsp' },
-        { name = 'luasnip' },
-        -- Other sources
+        { name = 'path' },
+        { name = 'nvim_lsp', keyword_length = 1 },
+        { name = 'luasnip', keyword_length = 2 },
+        { name = 'buffer', keyword_length = 3 },
         { name = 'spell', option = { keep_all_entries = false }, },
+        { name = 'emoji' },
         { name = 'buffer-lines' },
-        { name = 'buffer' },
         { name = 'treesitter' },
         { name = 'omni' },
-        { name = 'path' },
         { name = 'nvim_lua' },
     },
     -- Show: abbreviation, symbol + kind, menu
@@ -138,14 +142,11 @@ cmp.setup({
                 return vim_item
             end,
         },
+        expendable_indicator = true;
     },
     window = {
-        documentation = {
-            border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
-        },
-        completion = {
-            border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
-        },
+        documentation = cmp.config.window.bordered(),
+        completion = cmp.config.window.bordered()
     },
     experimental = {
         ghost_text = true,

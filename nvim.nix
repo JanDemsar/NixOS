@@ -16,7 +16,7 @@ let
     markdown-preview-nvim # opens markdown preview in browser
     telescope-nvim # Fuzzy search
     telescope-frecency-nvim # 
-    lightline-vim # status bar
+    lualine-nvim
     vim-gitbranch # get git info for status bar
     gitsigns-nvim # git gutter
     vim-fugitive # Git tool
