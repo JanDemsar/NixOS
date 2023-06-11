@@ -19,16 +19,17 @@ in
     flac
     zip
     bottom
-    jetbrains.clion
+    unstable.jetbrains.clion
     vscode
     atom
     teams
     bolt
     unstable.stm32cubemx
-    openocd
+    unstable.openocd
     nmap
     dpkg
     putty
+    unstable.minicom
 
     # dev
     glibc
