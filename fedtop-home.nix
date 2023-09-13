@@ -30,13 +30,14 @@ in
     dpkg
     putty
     unstable.minicom
+    docker
 
     # dev
-    glibc
+    unstable.glibc
     pkg-config
     jlink
     stlink
-    gdb
+    unstable.gdb
   ];
 
   home.username = "fedtop";
